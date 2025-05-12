@@ -1,0 +1,22 @@
+# Игнорируем .exe-файл сборки
+*.exe
+
+# Папка, создаваемая PyInstaller
+dist/
+build/
+__pycache__/
+
+# Логи, временные и системные файлы
+*.log
+*.pyc
+*.pyo
+*.pyd
+*.spec
+
+# IDE-файлы
+.vscode/
+.idea/
+
+# Кэш pip
+pip-wheel-metadata/
+*.egg-info/

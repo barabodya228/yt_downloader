@@ -1,5 +1,17 @@
 import subprocess
+import sys
+import os
 from tqdm import tqdm
+
+# # Функция для получения пути к ресурсам, если запущено как .exe
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):  # когда запущено как .exe
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
+
+# # Получаем пути к ffmpeg и ffprobe
+ffmpeg_path = resource_path("tools/ffmpeg.exe")
+ffprobe_path = resource_path("tools/ffprobe.exe")
 
 def get_format_list(url):
     command = [
@@ -24,6 +36,7 @@ def download_video(url, format_id, mode, format_choice='mp4'):
     else:
         quality = 'best'
 
+    # Передаем путь к ffmpeg
     command = [
         'yt-dlp',
         '--cookies-from-browser', 'firefox',
@@ -32,6 +45,7 @@ def download_video(url, format_id, mode, format_choice='mp4'):
         '--no-playlist',
         '--progress',
         '--quiet',  # Для уменьшения вывода
+        '--ffmpeg-location', os.path.dirname(ffmpeg_path),  # Указываем путь к ffmpeg
         url
     ]
 
